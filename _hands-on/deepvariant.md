@@ -3,7 +3,7 @@ topic: bioapplications
 title: Tutorial1 - WGS analysis with DeepVariant container 
 ---
 
-## Analysis of whole genome sequencing (WGS) data using DeepVariant Apptainer (aka apptainer)container
+## Analysis of whole genome sequencing (WGS) data using DeepVariant Apptainer (aka singularity)container
 Run [DeepVariant method](https://github.com/google/deepvariant) to perform variant calling on WGS and WES data sets in Puhti supercomputing environment using Apptainer container. One needs to prepare DeepVariant Apptainer image, models and test data to run the analysis. Additionally, other input files for running DeepVariant method include 1) A reference genome in [FASTA](https://en.wikipedia.org/wiki/FASTA_format) format and its corresponding index file (.fai). 2) An aligned reads file in [BAM](http://genome.sph.umich.edu/wiki/BAM) format and its corresponding index file (.bai). For the sake of this tutorial, test data is provided as a downloadable link in the later sections. 
 
 ### Expected learning from tutorial:
@@ -38,8 +38,9 @@ Upon completion of this tutorial you will learn to:
     export APPTAINER_TMPDIR=$LOCAL_SCRATCH
     export APPTAINER_CACHEDIR=$LOCAL_SCRATCH
     unset XDG_RUNTIME_DIR
-apptainer build dv_150.sif docker://gcr.io/deepvariant-docker/deepvariant:1.5.0
-   ```
+    singularity build dv_150.sif docker://gcr.io/deepvariant-docker/deepvariant:1.5.0
+   
+    ```
    This image conversion process for DeepVariant takes sometime as it is a bigger image with several layers.
 6. Download and unpack the test data for DeepVariant analysis
    ```bash
@@ -52,13 +53,13 @@ apptainer build dv_150.sif docker://gcr.io/deepvariant-docker/deepvariant:1.5.0
   are required to use a valid project number in the script before submitting it to Puhti cluster.
    
 ```bash
-!/bin/bash
+#!/bin/bash
 #SBATCH --account=project_465001676
 #SBATCH --partition=debug
 #SBATCH --time=00:30:00
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=32
-#SBATCH --job-name=pmx_toy
+#SBATCH --job-name=dv_toy
 
 
 export TMPDIR=$PWD
@@ -66,8 +67,8 @@ export SINGULARITYENV_TMPDIR=$PWD
 export SINGULARITYENV_TMP=$PWD
 
 
-apptainer -s exec --nv -B $PWD -B $PWD/testdata:/data \
-dv_150.sif \
+singularity -s exec  -B $PWD -B $PWD/testdata:/data \
+dv_cpu_150.sif \
 /opt/deepvariant/bin/run_deepvariant \
 --model_type=WGS \
 --ref=/data/ucsc.hg19.chr20.unittest.fasta \
