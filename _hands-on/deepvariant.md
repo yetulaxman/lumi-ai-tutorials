@@ -3,7 +3,7 @@ topic: bioapplications
 title: Tutorial1 - WGS analysis with DeepVariant container 
 ---
 
-## Analysis of whole genome sequencing (WGS) data using DeepVariant Apptainer (aka singularity)container
+## Analysis of whole genome sequencing (WGS) data using DeepVariant Apptainer (aka apptainer)container
 Run [DeepVariant method](https://github.com/google/deepvariant) to perform variant calling on WGS and WES data sets in Puhti supercomputing environment using Apptainer container. One needs to prepare DeepVariant Apptainer image, models and test data to run the analysis. Additionally, other input files for running DeepVariant method include 1) A reference genome in [FASTA](https://en.wikipedia.org/wiki/FASTA_format) format and its corresponding index file (.fai). 2) An aligned reads file in [BAM](http://genome.sph.umich.edu/wiki/BAM) format and its corresponding index file (.bai). For the sake of this tutorial, test data is provided as a downloadable link in the later sections. 
 
 ### Expected learning from tutorial:
@@ -23,8 +23,10 @@ Upon completion of this tutorial you will learn to:
     mkdir deepvariant && cd deepvariant
    ```
 4. Start interactive session on Puhti:
+   
+   please check the LUMI documentation for the [interactive jobs](https://docs.lumi-supercomputer.eu/runjobs/scheduled-jobs/interactive/)
    ```
-    sinteractive -c 2 -m 4G -d 100
+   
    ```
     You have to choose project number of the course  on the command prompt to start an interactive session.
 
@@ -36,7 +38,7 @@ Upon completion of this tutorial you will learn to:
     export APPTAINER_TMPDIR=$LOCAL_SCRATCH
     export APPTAINER_CACHEDIR=$LOCAL_SCRATCH
     unset XDG_RUNTIME_DIR
-    apptainer build deepvariant_cpu_1.2.0.sif docker://google/deepvariant:1.2.0
+apptainer build dv_150.sif docker://gcr.io/deepvariant-docker/deepvariant:1.5.0
    ```
    This image conversion process for DeepVariant takes sometime as it is a bigger image with several layers.
 6. Download and unpack the test data for DeepVariant analysis
@@ -49,25 +51,33 @@ Upon completion of this tutorial you will learn to:
   appropriate options automatically for running Apptainer. You are free to use plain Apptainer command by taking care of bind mounts appropriately. You
   are required to use a valid project number in the script before submitting it to Puhti cluster.
    
-   ```bash
-   #!/bin/bash
-   #SBATCH --time=00:10:00
-   #SBATCH --partition=debug     # You can also choose partition : "small" for this toy example
-   #SBATCH --account=project_xxxx
-   #SBATCH --ntasks=1
-   #SBATCH --cpus-per-task=10
-   #SBATCH --mem=4000
-   
+```bash
+!/bin/bash
+#SBATCH --account=project_465001676
+#SBATCH --partition=debug
+#SBATCH --time=00:30:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=32
+#SBATCH --job-name=pmx_toy
 
-   apptainer exec -B $PWD  $PWD/deepvariant_cpu1.2.0.sif  exec  \
-   /opt/deepvariant/bin/run_deepvariant \
-   --model_type=WGS   --ref=$PWD/testdata/ucsc.hg19.chr20.unittest.fasta \
-   --reads=$PWD/testdata/NA12878_S1.chr20.10_10p1mb.bam \
-   --regions "chr20:10,000,000-10,010,000" \
-   --output_vcf=$PWD/output.vcf.gz \
-   --output_gvcf=$PWD/output.g.vcf.gz
-   ```
-8. Submit your job to Puhti cluster
+
+export TMPDIR=$PWD
+export SINGULARITYENV_TMPDIR=$PWD
+export SINGULARITYENV_TMP=$PWD
+
+
+apptainer -s exec --nv -B $PWD -B $PWD/testdata:/data \
+dv_150.sif \
+/opt/deepvariant/bin/run_deepvariant \
+--model_type=WGS \
+--ref=/data/ucsc.hg19.chr20.unittest.fasta \
+--reads=/data/NA12878_S1.chr20.10_10p1mb.bam  \
+--regions "chr20:10,000,000-10,010,000" \
+--output_vcf=$PWD/output.vcf.gz  \
+--output_gvcf=$PWD/output.g.vcf.gz
+
+```
+8. Submit your job to LUMI
 
    ```bash
    sbatch -J deepvariant deepvariant_lumi.sh
