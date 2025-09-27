@@ -3,12 +3,12 @@ topic: bioapplications
 title: Tutorial1 - WGS analysis with DeepVariant container 
 ---
 
-## Analysis of whole genome sequencing (WGS) data using DeepVariant Apptainer (aka singularity)container
-Run [DeepVariant method](https://github.com/google/deepvariant) to perform variant calling on WGS and WES data sets in Puhti supercomputing environment using Apptainer container. One needs to prepare DeepVariant Apptainer image, models and test data to run the analysis. Additionally, other input files for running DeepVariant method include 1) A reference genome in [FASTA](https://en.wikipedia.org/wiki/FASTA_format) format and its corresponding index file (.fai). 2) An aligned reads file in [BAM](http://genome.sph.umich.edu/wiki/BAM) format and its corresponding index file (.bai). For the sake of this tutorial, test data is provided as a downloadable link in the later sections. 
+## Analysis of whole genome sequencing (WGS) data using DeepVariant Singularity container
+Run [DeepVariant method](https://github.com/google/deepvariant) to perform variant calling on WGS and WES data sets in LUMI supercomputing environment using singulairity container. One needs to prepare DeepVariant Apptainer image, models and test data to run the analysis. Additionally, other input files for running DeepVariant method include 1) A reference genome in [FASTA](https://en.wikipedia.org/wiki/FASTA_format) format and its corresponding index file (.fai). 2) An aligned reads file in [BAM](http://genome.sph.umich.edu/wiki/BAM) format and its corresponding index file (.bai). For the sake of this tutorial, test data is provided as a downloadable link in the later sections. 
 
 ### Expected learning from tutorial:
 Upon completion of this tutorial you will learn to: 
-- Prepare a Apptainer image (in this case, DeepVariant) interactively from [DockerHub](https://hub.docker.com/)
+- Prepare a singularity image (in this case, DeepVariant) interactively from a contianer registry
 - Deploy a Apptainer container for WGS analysis as a batch job on Puhti
 
 ### Run WGS analysis with DeepVariant Apptainercontainer on Puhti
