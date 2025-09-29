@@ -24,3 +24,23 @@ author: CSC Training
 1. [{{ hands-on.title }}]({{ hands-on.url | relative_url }})
 {% endif %}
 {% endfor %}
+
+## 3. Image analysis applications
+### Slides:  Introduction to Image analysis
+
+###  Tutorials and exercises
+{% for hands-on in items %}
+{% if hands-on.topic == 'imaging' %}
+1. [{{ hands-on.title }}]({{ hands-on.url | relative_url }})
+{% endif %}
+{% endfor %}
+
+## 4. LLMs for life sciences
+### Slides:  Introduction to Image analysis
+
+###  Tutorials and exercises
+{% for hands-on in items %}
+{% if hands-on.topic == 'llms' %}
+1. [{{ hands-on.title }}]({{ hands-on.url | relative_url }})
+{% endif %}
+{% endfor %}
