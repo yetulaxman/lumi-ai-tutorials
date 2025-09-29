@@ -1,5 +1,5 @@
 ---
-topic: bioapplications
+topic: genomics
 title: Tutorial1 - WGS analysis with DeepVariant container 
 ---
 
