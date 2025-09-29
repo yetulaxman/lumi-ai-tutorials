@@ -35,14 +35,14 @@ Upon completion of this tutorial you will learn to:
     ```
    This image building process for DeepVariant takes sometime as it is a bigger image with several layers.
 
-5. Download and unpack the test data for DeepVariant analysis as below:
+4. Download and unpack the test data for DeepVariant analysis as below:
 
    ```bash
     wget https://a3s.fi/containers-workflows/deepvariant_testdata.tar.gz
     tar -xavf deepvariant_testdata.tar.gz
    ```
 
-6. Prepare a batch script (e.g., deepvariant_lumi.sh) to run WGS analysis on LUMI. A batch script template with all necessary information is provided below. You
+5. Prepare a batch script (e.g., deepvariant_lumi.sh) to run WGS analysis on LUMI. A batch script template with all necessary information is provided below. You
   are required to use a valid project number in the script before submitting it to Puhti cluster.
    
 ```bash
@@ -71,7 +71,7 @@ dv_cpu_150.sif \
 --output_gvcf=$PWD/output.g.vcf.gz
 
 ```
-8. Submit your job to LUMI supercomputer
+6. Submit your job to LUMI supercomputer
 
    ```bash
    sbatch -J deepvariant deepvariant_lumi.sh
