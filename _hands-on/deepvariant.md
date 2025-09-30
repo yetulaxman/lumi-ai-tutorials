@@ -58,11 +58,6 @@ Upon completion of this tutorial you will learn to:
    #SBATCH --ntasks-per-node=32
    #SBATCH --job-name=dv_toy
 
- #   export TMPDIR=$PWD
- #  export SINGULARITYENV_TMPDIR=$PWD  # use flash drive for compute intensive tasks
- #  export SINGULARITYENV_TMP=$PWD # use flash drive for compute intensive tasks
-
-
    singularity -s exec  -B $PWD -B $PWD/testdata:/data \
    dv_cpu_150.sif \
    /opt/deepvariant/bin/run_deepvariant \
