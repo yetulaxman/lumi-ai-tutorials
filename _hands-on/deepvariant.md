@@ -51,7 +51,7 @@ Upon completion of this tutorial you will learn to:
    
    ```bash
    #!/bin/bash
-   #SBATCH --account=project_465001676
+   #SBATCH --account=project_xxxxxx
    #SBATCH --partition=debug
    #SBATCH --time=00:30:00
    #SBATCH --nodes=1
