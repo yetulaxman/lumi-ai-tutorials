@@ -31,12 +31,10 @@ Upon completion of this tutorial you will learn to:
     mkdir deepvariant && cd deepvariant
    ```
 
-3. Prepare Singularity image from docker image for DeepVariant analysis. Here we use   DeepVariant Docker image from google container registry with a
-   specific tag (i.e., v1.5.0).  It is advisable to use LOCAL_SCRATCH for Singularity TMPDIR and CACHEDIR as below:
+3. Prepare Singularity image from docker image for DeepVariant analysis. Here we use DeepVariant Docker image from google container registry with a
+   specific tag (i.e., v1.5.0) as shown below: 
 
    ```bash
-    export APPTAINER_TMPDIR=$LOCAL_SCRATCH
-    export APPTAINER_CACHEDIR=$LOCAL_SCRATCH
     singularity build dv_150.sif docker://gcr.io/deepvariant-docker/deepvariant:1.5.0
     ```
    This image building process for DeepVariant takes sometime as it is a bigger image with several layers.
