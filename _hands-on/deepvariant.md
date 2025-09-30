@@ -4,7 +4,13 @@ title: Tutorial1 - WGS analysis with DeepVariant container
 ---
 
 ## Analysis of whole genome sequencing (WGS) data using DeepVariant Singularity container
-Run [DeepVariant method](https://github.com/google/deepvariant) to perform variant calling on WGS and WES data sets in LUMI supercomputing environment using singulairity container. The analysis needs the following input files : 1) A reference genome in [FASTA](https://en.wikipedia.org/wiki/FASTA_format) format and its corresponding index file (.fai). 2) An aligned reads file in [BAM](http://genome.sph.umich.edu/wiki/BAM) format and its corresponding index file (.bai). For the sake of this tutorial, test data is provided as a downloadable link in the later sections. 
+Run the [DeepVariant method](https://github.com/google/deepvariant) to perform variant calling on whole-genome (WGS) and whole-exome (WES) sequencing datasets within the LUMI supercomputing environment using a Singularity container.
+
+This analysis requires the following input files:
+   - A reference genome in[FASTA](https://en.wikipedia.org/wiki/FASTA_format) format, along with its corresponding index file (.fai)
+   - An aligned reads file in [BAM](http://genome.sph.umich.edu/wiki/BAM) format, along with its corresponding index file (.bai)
+
+For the purpose of this tutorial, sample test data will be provided via a downloadable link in later sections.
 
 ### Expected learning from tutorial:
 Upon completion of this tutorial you will learn to: 
@@ -26,7 +32,7 @@ Upon completion of this tutorial you will learn to:
    ```
 
 3. Prepare Singularity image from docker image for DeepVariant analysis. Here we use   DeepVariant Docker image from google container registry with a
-   specific tag (i.e., 1.5.0).  It is advisable to use LOCAL_SCRATCH for Singularity TMPDIR and CACHEDIR as below:
+   specific tag (i.e., v1.5.0).  It is advisable to use LOCAL_SCRATCH for Singularity TMPDIR and CACHEDIR as below:
 
    ```bash
     export APPTAINER_TMPDIR=$LOCAL_SCRATCH
@@ -45,36 +51,35 @@ Upon completion of this tutorial you will learn to:
 5. Prepare a batch script (e.g., deepvariant_lumi.sh) to run WGS analysis on LUMI. A batch script template with all necessary information is provided below. You
   are required to use a valid project number in the script before submitting it to Puhti cluster.
    
-```bash
-#!/bin/bash
-#SBATCH --account=project_465001676
-#SBATCH --partition=debug
-#SBATCH --time=00:30:00
-#SBATCH --nodes=1
-#SBATCH --ntasks-per-node=32
-#SBATCH --job-name=dv_toy
-
-
-export TMPDIR=$PWD
-export SINGULARITYENV_TMPDIR=$PWD
-export SINGULARITYENV_TMP=$PWD
-
-
-singularity -s exec  -B $PWD -B $PWD/testdata:/data \
-dv_cpu_150.sif \
-/opt/deepvariant/bin/run_deepvariant \
---model_type=WGS \
---ref=/data/ucsc.hg19.chr20.unittest.fasta \
---reads=/data/NA12878_S1.chr20.10_10p1mb.bam  \
---regions "chr20:10,000,000-10,010,000" \
---output_vcf=$PWD/output.vcf.gz  \
---output_gvcf=$PWD/output.g.vcf.gz
-
-```
-6. Submit your job to LUMI supercomputer
-
    ```bash
-   sbatch -J deepvariant deepvariant_lumi.sh
-   ```
-   If the analysis is completed successfully (**hint**: check the status of submitted job using `squeue -u $USER` command or using `seff <jobid>`), you are able to see the vcf files as output in the current directory.
+   #!/bin/bash
+   #SBATCH --account=project_465001676
+   #SBATCH --partition=debug
+   #SBATCH --time=00:30:00
+   #SBATCH --nodes=1
+   #SBATCH --ntasks-per-node=32
+   #SBATCH --job-name=dv_toy
 
+   export TMPDIR=$PWD
+   export SINGULARITYENV_TMPDIR=$PWD
+   export SINGULARITYENV_TMP=$PWD
+
+
+   singularity -s exec  -B $PWD -B $PWD/testdata:/data \
+   dv_cpu_150.sif \
+   /opt/deepvariant/bin/run_deepvariant \
+   --model_type=WGS \
+   --ref=/data/ucsc.hg19.chr20.unittest.fasta \
+   --reads=/data/NA12878_S1.chr20.10_10p1mb.bam  \
+   --regions "chr20:10,000,000-10,010,000" \
+   --output_vcf=$PWD/output.vcf.gz  \
+   --output_gvcf=$PWD/output.g.vcf.gz
+   ```
+
+6. Submit your job to LUMI supercomputer
+   
+   ```bash
+   sbatch -J deepvariant deepvariant_lumi.sh´
+   ```
+   If the analysis is completed successfully (**hint**: check the status of submitted job using `squeue -u $USER` command or using `seff <jobid>`), you are able
+    to see the vcf files as output in the current directory.
