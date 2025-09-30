@@ -7,7 +7,7 @@ title: Tutorial1 - WGS analysis with DeepVariant container
 Run the [DeepVariant method](https://github.com/google/deepvariant) to perform variant calling on whole-genome (WGS) and whole-exome (WES) sequencing datasets within the LUMI supercomputing environment using a Singularity container.
 
 This analysis requires the following input files:
-   - A reference genome in[FASTA](https://en.wikipedia.org/wiki/FASTA_format) format, along with its corresponding index file (.fai)
+   - A reference genome in [FASTA](https://en.wikipedia.org/wiki/FASTA_format) format, along with its corresponding index file (.fai)
    - An aligned reads file in [BAM](http://genome.sph.umich.edu/wiki/BAM) format, along with its corresponding index file (.bai)
 
 For the purpose of this tutorial, sample test data will be provided via a downloadable link in later sections.
@@ -58,9 +58,9 @@ Upon completion of this tutorial you will learn to:
    #SBATCH --ntasks-per-node=32
    #SBATCH --job-name=dv_toy
 
-   export TMPDIR=$PWD
-   export SINGULARITYENV_TMPDIR=$PWD
-   export SINGULARITYENV_TMP=$PWD
+ #   export TMPDIR=$PWD
+ #  export SINGULARITYENV_TMPDIR=$PWD  # use flash drive for compute intensive tasks
+ #  export SINGULARITYENV_TMP=$PWD # use flash drive for compute intensive tasks
 
 
    singularity -s exec  -B $PWD -B $PWD/testdata:/data \
