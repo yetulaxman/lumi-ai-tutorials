@@ -27,7 +27,7 @@ For the partition field, select "lumid" for accelerated visualisation. Puhti has
 
 ### Step 4: Run Napari from the Terminal
 
-In the terminal (the menu bar in the bottom-left corner of the Desktop App) of the LUMI Desktop session, run:
+In the terminal inside of the LUMI Desktop session, run:
 
 ```bash
 singularity run napari.sif
