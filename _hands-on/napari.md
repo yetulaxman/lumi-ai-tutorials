@@ -1,3 +1,8 @@
+---
+topic: imaging
+title: Tutorial1 - WGS analysis with DeepVariant container 
+---
+
 ## Running Napari on LUMI Using Singularity
 
 [Napari](https://github.com/napari/napari) is a fast and interactive viewer designed for a wide range of image analysis tasks. The easiest way to launch Napari is to use a containerized version supplied by the NAPARI developers and open it via  Open OnDemand (OoD) web interface. Here are the minimal instructions to open NAPARI app: 
