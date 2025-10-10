@@ -1,6 +1,6 @@
 ---
 topic: imaging
-title: Tutorial1 - WGS analysis with DeepVariant container 
+title: Tutorial1 - Interactive visualisation for image analysis
 ---
 
 ## Running Napari on LUMI Using Singularity
